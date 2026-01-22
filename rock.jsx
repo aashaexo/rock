@@ -296,7 +296,7 @@ function CreateGameScreen({ stake, setStake, playerMove, setPlayerMove, onBack, 
 // ============ WAITING SCREEN ============
 function WaitingScreen({ gameId, stake, playerMove, onCancel }) {
   const [copied, setCopied] = useState(false);
-  const shareLink = `rock.app/duel/${gameId}`;
+  const shareLink = `https://rock.app/duel/${gameId}`;
 
   const copyLink = () => {
     navigator.clipboard?.writeText(shareLink);
