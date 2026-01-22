@@ -36,6 +36,18 @@ export default function RockApp() {
     }
   }, [screen]);
 
+  // Handle gameId from URL query parameter
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const urlGameId = params.get('gameId');
+      if (urlGameId && screen === 'home') {
+        setGameId(urlGameId);
+        setScreen('join');
+      }
+    }
+  }, [screen]);
+
   // Create game
   const createGame = () => {
     if (!playerMove) return;
@@ -296,7 +308,9 @@ function CreateGameScreen({ stake, setStake, playerMove, setPlayerMove, onBack, 
 // ============ WAITING SCREEN ============
 function WaitingScreen({ gameId, stake, playerMove, onCancel }) {
   const [copied, setCopied] = useState(false);
-  const shareLink = `https://rock.app/duel/${gameId}`;
+  const shareLink = typeof window !== 'undefined' 
+    ? `${window.location.origin}?gameId=${gameId}`
+    : `https://rock.app?gameId=${gameId}`;
 
   const copyLink = () => {
     navigator.clipboard?.writeText(shareLink);
